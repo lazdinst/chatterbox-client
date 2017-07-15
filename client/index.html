@@ -7,6 +7,7 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -26,7 +27,19 @@
     <div id="main">
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
+      <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+        <div id="roomSelect" class="dropdown-content">
+        <!-- Room displayed in the selctor is the current room -->
+        
+        </div>
+      </div>
     </div>
-    <div id="chats"></div>
+    <div id="chats">
+      <div class="mesageBox">
+        <div class="username">Brett</div>
+        <div class="messagetext">Hey there.</div>
+      </div>
+    </div>
   </body>
 </html>
