@@ -3,21 +3,28 @@
 -Convert all inputs to strings
 
 */
+
+var i = 0; 
+
 var app = {
-  server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+
+  server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages?limit=1000000',
   
   currentRoom: 'lobby',
   
   init: function() {
     this.fetch();
+    
+    $(document).on('click', '.username', function() {
+      
+    });
   },
   
   send: function(input) { //Expecting AJAX Post requst
-    var data = JSON.stringify(input);
     $.ajax({
       url: this.server,
       type: 'POST',
-      data: data,
+      data: input,
       success: postSuccess,
       error: ajaxError(this.type)
     });
@@ -26,7 +33,7 @@ var app = {
   
   fetch: function() { //Expecting GET request
     $.ajax({
-      url: this.server,
+      url: this.server + '',
       type: 'GET',
       success: fetchSuccess,
       error: ajaxError(this.type)
@@ -52,9 +59,6 @@ var app = {
     $('#roomSelect').append(room);
   },
   
-  handleUsernameClick: function(username) {
-    // $('')
-  }
 };
 
 $(document).ready(function() {
@@ -67,13 +71,17 @@ $(document).ready(function() {
 
 var fetchSuccess = function(data) {
   console.log(data);
-  data.results.forEach(function(messageObject) {
+  
+  var results = data.results.filter(function(post) {
+    return post.hasOwnProperty('roomname' && 'text' && 'username');
+  });
+  results.forEach(function(messageObject) {
     app.renderMessage(messageObject);
   });
 };
 
 var postSuccess = function(data) {
-  //something here
+  console.log('Sucess!');
 };
 
 var ajaxError = function(type) {
@@ -82,9 +90,14 @@ var ajaxError = function(type) {
 };
 
 var makeSafe = function(s) {
-  if (!null) {
+  if (s === null || s === undefined) {
+    return s;
+  } else {
     s = JSON.stringify(s);
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    if (s.includes('<')) {
+      return 'no no';
+    }
+    return s;
   }
-  return s;
+
 };
