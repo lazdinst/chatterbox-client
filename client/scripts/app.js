@@ -8,13 +8,13 @@ var app = {
   server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages?limit=1000000',
   
   currentRoom: $('select').val(),
-  
   userLoggedIn: false,
   
   numOfMessages: 0,
   
   init: function() {
-    setInterval(this.fetch(), 2000);
+    setInterval(
+      function() { app.fetch(); }, 2000);
     addFriend();
     app.submit();
     this.changeRoomEvent();
