@@ -213,6 +213,11 @@ var app = {
 
 var postSuccess = function(data) {
   console.log('Sucess!');
+  var sucessMessage = '<div class="alert alert-success" role="alert"> You successfully made a post!</div>';
+  $('.help-block').append(sucessMessage);
+  setTimeout(function() {
+    $('.help-block').empty();
+  }, 3000);
   app.fetch();
 };
 
